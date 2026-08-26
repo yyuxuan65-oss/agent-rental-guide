@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>你的 AI 实习生 · 使用指南</title>
+<style>
+  :root{
+    --ink:#1a2233; --ink-soft:#4a5568; --muted:#8a94a6;
+    --bg:#fafbfc; --card:#ffffff; --line:#e8ebf0;
+    --brand:#16a34a; --brand-deep:#15803d; --brand-soft:#ecfdf5;
+    --accent:#2563eb; --bad:#dc2626; --bad-soft:#fef2f2; --good:#16a34a; --good-soft:#f0fdf4;
+    --shadow:0 1px 2px rgba(16,24,40,.05),0 8px 24px rgba(16,24,40,.06);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:-apple-system,"PingFang SC","Microsoft YaHei","Segoe UI",sans-serif;
+    color:var(--ink); background:var(--bg); line-height:1.7; font-size:16px;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:880px;margin:0 auto;padding:0 20px;}
+
+  /* Hero */
+  header.hero{
+    background:linear-gradient(180deg,#f0fdf4 0%,var(--bg) 100%);
+    padding:64px 0 48px; text-align:center;
+  }
+  .badge{
+    display:inline-block;background:var(--brand-soft);color:var(--brand-deep);
+    border:1px solid #bbf7d0;padding:5px 14px;border-radius:999px;
+    font-size:14px;font-weight:600;margin-bottom:20px;
+  }
+  h1{font-size:clamp(28px,6vw,44px);line-height:1.2;font-weight:800;letter-spacing:-.5px;}
+  h1 .em{color:var(--brand);}
+  .hero p.sub{color:var(--ink-soft);font-size:clamp(16px,3.5vw,19px);margin-top:18px;max-width:640px;margin-left:auto;margin-right:auto;}
+  .hero .core{
+    margin-top:28px;display:inline-flex;flex-wrap:wrap;gap:8px;justify-content:center;
+  }
+  .hero .core span{
+    background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow);
+    padding:9px 16px;border-radius:12px;font-weight:600;color:var(--ink);
+  }
+  .hero .core span b{color:var(--brand);}
+
+  /* 通用 section */
+  section{padding:40px 0;}
+  h2{font-size:clamp(22px,4.5vw,30px);font-weight:800;text-align:center;letter-spacing:-.3px;}
+  h2 .em{color:var(--brand);}
+  .subtitle{text-align:center;color:var(--muted);margin-top:8px;margin-bottom:32px;font-size:15px;}
+
+  /* 三步 */
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+  .step{
+    background:var(--card);border:1px solid var(--line);border-radius:16px;
+    padding:26px 22px;box-shadow:var(--shadow);position:relative;overflow:hidden;
+  }
+  .step::before{
+    content:"";position:absolute;top:0;left:0;right:0;height:4px;
+    background:var(--brand);
+  }
+  .step .num{
+    font-size:40px;font-weight:800;color:var(--brand-soft);line-height:1;
+    -webkit-text-stroke:2px var(--brand);margin-bottom:12px;
+  }
+  .step h3{font-size:20px;font-weight:700;margin-bottom:14px;}
+  .step ul{list-style:none;}
+  .step ul li{
+    position:relative;padding-left:22px;margin-bottom:10px;
+    color:var(--ink-soft);font-size:15px;
+  }
+  .step ul li::before{content:"✓";position:absolute;left:0;color:var(--brand);font-weight:700;}
+
+  /* 提问公式 */
+  .formula{
+    background:var(--card);border:2px solid #bbf7d0;border-radius:16px;
+    padding:28px;box-shadow:var(--shadow);text-align:center;
+  }
+  .formula .f-title{font-weight:700;font-size:18px;margin-bottom:6px;}
+  .formula .f-hint{color:var(--muted);font-size:14px;margin-bottom:20px;}
+  .formula .parts{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;align-items:center;}
+  .formula .part{
+    background:var(--brand-soft);border:1px solid #bbf7d0;border-radius:10px;
+    padding:10px 14px;font-weight:600;color:var(--brand-deep);
+  }
+  .formula .plus{color:var(--muted);font-weight:800;}
+
+  /* 好/差对比 */
+  .compare{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+  .cmp{border-radius:16px;padding:24px;border:1px solid var(--line);}
+  .cmp.bad{background:var(--bad-soft);border-color:#fecaca;}
+  .cmp.good{background:var(--good-soft);border-color:#bbf7d0;}
+  .cmp h3{font-size:17px;font-weight:700;margin-bottom:14px;}
+  .cmp.bad h3{color:var(--bad);}
+  .cmp.good h3{color:var(--good);}
+  .cmp .box{
+    background:var(--card);border-radius:10px;padding:14px 16px;margin-bottom:12px;
+    font-size:15px;border:1px solid var(--line);
+  }
+  .cmp.bad .box{border-color:#fecaca;}
+  .cmp.good .box{border-color:#bbf7d0;}
+  .cmp .box .q{font-weight:700;margin-bottom:4px;}
+  .cmp .why{font-size:13.5px;color:var(--ink-soft);}
+
+  /* 避坑 */
+  .pitfalls{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+  .pitfall{
+    background:var(--card);border:1px solid var(--line);border-radius:14px;
+    padding:22px;box-shadow:var(--shadow);
+  }
+  .pitfall .icon{font-size:26px;margin-bottom:10px;}
+  .pitfall h3{font-size:16px;font-weight:700;margin-bottom:8px;}
+  .pitfall p{color:var(--ink-soft);font-size:14px;}
+
+  footer{padding:40px 0 56px;text-align:center;color:var(--muted);font-size:14px;}
+  footer .soul{
+    margin-top:16px;font-size:15px;color:var(--ink-soft);
+    background:var(--card);border:1px dashed var(--line);border-radius:12px;
+    padding:16px 20px;display:inline-block;
+  }
+  footer .soul b{color:var(--brand);}
+
+  /* 响应式 */
+  @media (max-width:720px){
+    .steps,.pitfalls{grid-template-columns:1fr;}
+    .compare{grid-template-columns:1fr;}
+    header.hero{padding:48px 0 36px;}
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="badge">Agent 使用指南 · 给第一次用它的人</div>
+    <h1>你租的不是「万能 AI」，<br>是一个<span class="em">实习生</span></h1>
+    <p class="sub">它聪明、学得快，但需要你 <b>养</b>、<b>教</b>、<b>培养</b>。<br>你投入多少，它就长成什么样——和带一个新人，一模一样。</p>
+    <div class="core">
+      <span>🐣 <b>养</b>它 · 给它时间</span>
+      <span>📚 <b>教</b>它 · 把话说清楚</span>
+      <span>🌱 <b>培养</b>它 · 错了就纠正</span>
+    </div>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <h2>三步，<span class="em">上手</span></h2>
+    <p class="subtitle">不用懂技术，会带人就会用它</p>
+    <div class="steps">
+      <div class="step">
+        <div class="num">1</div>
+        <h3>认识它 · 刚入职的实习生</h3>
+        <ul>
+          <li>不是万事通专家，是学习力极强的「新人」</li>
+          <li>会的不算少，但每件事都要你交代清楚</li>
+          <li>你对它好，它记你一辈子</li>
+        </ul>
+      </div>
+      <div class="step">
+        <div class="num">2</div>
+        <h3>教它 · 像派活一样说清楚</h3>
+        <ul>
+          <li>说目标：要它做什么、做到什么程度</li>
+          <li>给素材：文件、数据、例子直接发过去</li>
+          <li>别让它猜：你交代多清楚，它做多对</li>
+        </ul>
+      </div>
+      <div class="step">
+        <div class="num">3</div>
+        <h3>养它 · 越带越顺手</h3>
+        <ul>
+          <li>错了就纠正：它一次记住，不再犯第二次</li>
+          <li>喂它习惯：你的偏好、格式、口径它都记下</li>
+          <li>给它时间：第一周生疏，一个月就顺手</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>一条「好指令」的<span class="em">公式</span></h2>
+    <p class="subtitle">照着填，它就懂你</p>
+    <div class="formula">
+      <div class="f-title">好指令 = 目标 + 背景 + 素材 + 要求</div>
+      <div class="f-hint">四个要素给齐，基本不会错</div>
+      <div class="parts">
+        <span class="part">🎯 目标：做什么</span>
+        <span class="plus">+</span>
+        <span class="part">📋 背景：它不知道的事</span>
+        <span class="plus">+</span>
+        <span class="part">📎 素材：文件/数据/例子</span>
+        <span class="plus">+</span>
+        <span class="part">📐 要求：格式/长短/风格</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>这样说，<span class="em">更对</span></h2>
+    <p class="subtitle">一句话的差别，结果差很多</p>
+    <div class="compare">
+      <div class="cmp bad">
+        <h3>❌ 别这么说</h3>
+        <div class="box">
+          <div class="q">「帮我做个方案」</div>
+        </div>
+        <div class="box">
+          <div class="q">「这个怎么弄？」</div>
+        </div>
+        <div class="why">太模糊。实习生不知道你要什么、给谁看、用什么数据，只能瞎猜。</div>
+      </div>
+      <div class="cmp good">
+        <h3>✅ 这样说</h3>
+        <div class="box">
+          <div class="q">「帮我做一份 6 月招商 PPT，数据在附件里，重点突出出租率环比变化，风格简洁、别超过 10 页。」</div>
+        </div>
+        <div class="box">
+          <div class="q">「我要处理 XX，遇到 YY 卡住了，你能帮我想怎么解决吗？背景是……」</div>
+        </div>
+        <div class="why">目标、素材、要求都清楚，它一次就能做到位。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>三句话，<span class="em">避坑</span></h2>
+    <p class="subtitle">记住就不容易失望</p>
+    <div class="pitfalls">
+      <div class="pitfall">
+        <div class="icon">🙅</div>
+        <h3>别把它当神</h3>
+        <p>它也会犯错，错了当场纠正就好，不用怀疑它不行。</p>
+      </div>
+      <div class="pitfall">
+        <div class="icon">💪</div>
+        <h3>别怕它犯错</h3>
+        <p>犯错正是培养的过程。你纠正一次，它就长进一分。</p>
+      </div>
+      <div class="pitfall">
+        <div class="icon">⏳</div>
+        <h3>别急着放弃</h3>
+        <p>实习生需要时间，坚持带一个月，见分晓。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="soul">
+      把它当成你团队里那个<b>最有潜力、学得最快的实习生</b>——<br>
+      你怎么带新人，就怎么用它。
+    </div>
+    <p style="margin-top:20px;">养它、教它、培养它 · 越用越懂你</p>
+  </div>
+</footer>
+
+</body>
+</html>
